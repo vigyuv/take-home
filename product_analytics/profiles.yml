@@ -1,0 +1,38 @@
+product_analytics:
+  target: "{{ env_var('DBT_ENVIRONMENT') }}"
+  outputs:
+    dev:
+      type: snowflake
+      account: harveyai-data
+      authenticator: externalbrowser
+      role: ANALYTICS_ENGINEERING
+      database: SCRATCH_PRODUCT
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      schema: "{{ env_var('SNOWFLAKE_USER') }}"
+      threads: 16
+      client_session_keep_alive: false
+      warehouse: WH_ANALYTICS_ENGINEERING_EXTRA_SMALL
+    test:
+      type: snowflake
+      account: harveyai-data
+      private_key: "{{ env_var('SNOWFLAKE_PRIVATE_KEY') }}"
+      private_key_passphrase: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PASSPHRASE') }}"
+      role: APP_PRODUCT_DBT_TEST
+      warehouse: WH_ANALYTICS_ENGINEERING_SMALL
+      database: SOURCE_PRODUCT_TEST
+      user: APP_PRODUCT_DBT_TEST
+      schema: "{{ env_var('SNOWFLAKE_USER') }}"
+      threads: 16
+      client_session_keep_alive: false
+    prod:
+      type: snowflake
+      account: harveyai-data
+      private_key: "{{ env_var('SNOWFLAKE_PRIVATE_KEY') }}"
+      private_key_passphrase: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PASSPHRASE') }}"
+      role: APP_PRODUCT_DBT_PROD
+      warehouse: WH_ANALYTICS_ENGINEERING_SMALL
+      user: APP_PRODUCT_DBT_PROD
+      database: SOURCE_PRODUCT_PROD
+      schema: "{{ env_var('SNOWFLAKE_USER') }}"
+      threads: 16
+      client_session_keep_alive: false
