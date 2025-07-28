@@ -1,0 +1,49 @@
+Client Base
+  Characteristics
+  B2B-Centric Firms
+  Corporate clients, more transactional workflows
+  B2C-Centric Firms
+  High volume, document-heavy (e.g., immigration, family law)
+  Mixed Firms
+  Require flexible tools that span both contexts
+
+Practice Area
+  Relevance to AI Tools
+  Litigation
+  High – case research, summarization
+  Corporate Law
+  Moderate – contract review, drafting
+  Intellectual Property
+  High – prior art searches, complex docs
+  Family/Immigration
+  Low–Moderate – depends on volume of paperwork
+  Employment/Labor
+  Moderate – policy and compliance-heavy docs
+
+
+
+client_service_region
+  Characteristics
+  North America
+  High demand for AI tools, especially in corporate and litigation sectors
+  Europe
+  Growing interest, especially in IP and corporate law
+  Asia-Pacific
+  Emerging market, potential for high growth in B2B and B2C sectors
+  Latin America
+  Moderate demand, focus on corporate and employment law
+  Africa
+  Low to moderate demand, primarily in corporate law
+
+client_service_sub_region
+  east, west, central, north, south, northeast, southeast, northwest, southwest
+
+Segment Characteristics
+  Solo/Small Firms
+  1–10 attorneys; generalists, budget-conscious
+  Mid-sized Firms
+  10–100 attorneys; some specialization, regional reach
+  Large Firms
+  100–500 attorneys; multiple practice areas, often national
+  Enterprise Firms
+  500+ attorneys; international, complex workflows, high ARR
