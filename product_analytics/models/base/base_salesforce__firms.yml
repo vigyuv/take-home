@@ -1,49 +1,146 @@
-Client Base
-  Characteristics
-  B2B-Centric Firms
-  Corporate clients, more transactional workflows
-  B2C-Centric Firms
-  High volume, document-heavy (e.g., immigration, family law)
-  Mixed Firms
-  Require flexible tools that span both contexts
+version: 2
 
-Practice Area
-  Relevance to AI Tools
-  Litigation
-  High – case research, summarization
-  Corporate Law
-  Moderate – contract review, drafting
-  Intellectual Property
-  High – prior art searches, complex docs
-  Family/Immigration
-  Low–Moderate – depends on volume of paperwork
-  Employment/Labor
-  Moderate – policy and compliance-heavy docs
+models:
+  - name: base_salesforce__firms
+    alias: firms
+    config:
+      contract:
+        enforced: true
+    description: | 
+      Table that records events performed by users in Harvey's Platform.
+    data_tests:
+      - warn_freshness_anomalies_defaults:
+        timestamp_column: sys_modified_at
 
+    columns:
+      - name: firm_id
+        description: "Unique identifier for the firm"
+        data_type: string
+        constraints:
+          - primary_key
+        data_tests:
+          - unique
+          - not_null
 
+      - name: firm_name
+        description: "Name of the firm"
+        data_type: string
+        data_tests:
+          - not_null
+    
+      - name: practice_area
+        description: "Primary practice area of the firm"
+        data_type: string
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                [
+                  'Litigation',
+                  'Corporate Law',
+                  'Intellectual Property',
+                  'Family/Immigration',
+                  'Employment/Labor'
+                ]
 
-client_service_region
-  Characteristics
-  North America
-  High demand for AI tools, especially in corporate and litigation sectors
-  Europe
-  Growing interest, especially in IP and corporate law
-  Asia-Pacific
-  Emerging market, potential for high growth in B2B and B2C sectors
-  Latin America
-  Moderate demand, focus on corporate and employment law
-  Africa
-  Low to moderate demand, primarily in corporate law
+      - name: client_base
+        description: "Type of client base the firm serves"
+        data_type: string
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                [
+                  'B2B-Centric',
+                  'B2C-Centric',
+                  'Mixed'
+                ]
 
-client_service_sub_region
-  east, west, central, north, south, northeast, southeast, northwest, southwest
+      - name: client_service_region
+        description: "Geographic region where the firm primarily serves clients"
+        data_type: string
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                [
+                  'North America',
+                  'Europe',
+                  'Asia-Pacific',
+                  'Latin America',
+                  'Africa'
+                ]
 
-Segment Characteristics
-  Solo/Small Firms
-  1–10 attorneys; generalists, budget-conscious
-  Mid-sized Firms
-  10–100 attorneys; some specialization, regional reach
-  Large Firms
-  100–500 attorneys; multiple practice areas, often national
-  Enterprise Firms
-  500+ attorneys; international, complex workflows, high ARR
+      - name: client_service_sub_region
+        description: "Sub-region within the primary service region"
+        data_type: string
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                [
+                  'east', 'west', 'central', 'north', 'south',
+                  'northeast', 'southeast', 'northwest', 'southwest'
+                ]
+
+      - name: market_segment
+        description: "Market segment the firm primarily serves"
+        data_type: string
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                [
+                  'Small Firms',
+                  'Mid-sized Firms',
+                  'Large Firms',
+                  'Enterprise Firms'
+                ]
+
+      - name: country
+        description: "Country where the firm is located"
+        data_type: string
+        data_tests:
+          - not_null 
+
+      - name: state
+        description: "State or region where the firm is located"
+        data_type: string
+        data_tests:
+          - not_null
+
+      - name: city
+        description: "City where the firm is located"
+        data_type: string
+
+      - name: zip_code
+        description: "Postal code of the firm's location"
+        data_type: string
+
+      - name: firm_size
+        description: "Size of the firm based on number of employees"
+        data_type: number(16, 0)
+        data_tests:
+          - not_null
+
+      - name: annual_revenue
+        description: "Annual revenue of the firm in USD"
+        data_type: number(16, 2)
+        data_tests:
+          - not_null
+
+      - name: is_active
+        description: "Indicates if the firm is currently active"
+        data_type: boolean
+
+      - name: sys_created_at
+        description: "{{ doc('sys_created_at') }}"
+        data_type: timestamp
+
+      - name: sys_modified_at
+        description: "{{ doc('sys_modified_at') }}"
+        data_type: timestamp
+
+      - name: _updated_at
+        description: "Timestamp when the record was last updated"
+        data_type: timestamp

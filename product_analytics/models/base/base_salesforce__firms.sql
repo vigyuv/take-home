@@ -1,4 +1,4 @@
-with source AS (
+with source as (
 	
 	select
 		*
@@ -6,7 +6,7 @@ with source AS (
 
 )
 
-, staging AS (
+, staging as (
 
 	select
 		--ids

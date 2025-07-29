@@ -1,4 +1,4 @@
-with source AS (
+with source as (
 	
 	select
 		*
@@ -6,34 +6,34 @@ with source AS (
 
 )
 
-, staging AS (
+, staging as (
 
 	select
 		--dates
-		to_date(activatedAt) as activation_date
+		to_date(activatedat) as activation_date
 
 		--ids
 		, id as user_id
-		, firmID as firm_id
+		, firmid as firm_id
 		
 		--strings
-		, firstName as first_name
-		, lastName as last_name
+		, firstname as first_name
+		, lastname as last_name
 		, email as email_address
-		, roleTitle as title
+		, roletitle as title
 		
 		--booleans
-		, isActive as is_active
-		, isVerified as is_verified
-		, isAdmin as is_admin
+		, isactive as is_active
+		, isverified as is_verified
+		, isadmin as is_admin
 
 		--timestamps
-		, activatedAt as user_activated_at
-		, lastLoginAt as last_login_at
-		, createdAt as sys_created_at
-		, modifiedAt as sys_modified_at
+		, activatedat as user_activated_at
+		, lastloginat as last_login_at
+		, createdat as sys_created_at
+		, modifiedat as sys_modified_at
 		, {{ required_table_fields() }}
-    from source
+	from source
 
 )
 

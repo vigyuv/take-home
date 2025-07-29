@@ -1,0 +1,91 @@
+version: 2
+
+models:
+  - name: base_nucleus__users
+    alias: users
+    config:
+      contract:
+        enforced: true
+    description: | 
+      Table that records users provisioned to use Harvey's Platform.
+    data_tests:
+      - warn_freshness_anomalies_defaults:
+        timestamp_column: sys_modified_at
+
+    columns:
+      - name: activation_date
+        description: Date when the user was activated
+        data_type: date
+        data_tests:
+          - not_null
+
+      - name: user_id
+        description: "Unique identifier for the user"
+        data_type: string
+        constraints:
+          - primary_key
+        data_tests:
+          - unique
+          - not_null
+
+      - name: firm_id
+        description: "Unique identifier for the firm"
+        data_type: string
+        data_tests:
+          - not_null
+
+      - name: first_name
+        description: "First name of the user"
+        data_type: string
+        data_tests:
+          - not_null
+
+      - name: last_name
+        description: "Last name of the user"
+        data_type: string
+        data_tests:
+          - not_null
+
+      - name: email_address
+        description: "Email address of the user"
+        data_type: string
+        data_tests:
+          - not_null
+
+      - name: title
+        description: "Job title of the user"
+        data_type: string
+
+      - name: is_active
+        description: "Indicates if the user is currently active"
+        data_type: boolean
+
+      - name: is_verified
+        description: "Indicates if the user's email is verified"
+        data_type: boolean
+
+      - name: is_admin
+        description: "Indicates if the user has admin privileges"
+        data_type: boolean
+
+      - name: user_activated_at
+        description: "Timestamp when the user was activated"
+        data_type: timestamp
+        data_tests:
+          - not_null
+
+      - name: last_login_at
+        description: "Timestamp of the user's last login"
+        data_type: timestamp
+
+      - name: sys_created_at
+        description: "{{ doc('sys_created_at') }}"
+        data_type: timestamp
+
+      - name: sys_modified_at
+        description: "{{ doc('sys_modified_at') }}"
+        data_type: timestamp
+
+      - name: _updated_at
+        description: "Timestamp when the record was last updated"
+        data_type: timestamp
