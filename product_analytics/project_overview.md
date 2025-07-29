@@ -7,7 +7,7 @@ This analytics project transforms raw telemetry and CRM data into trusted, busin
 ([sample data](https://docs.google.com/spreadsheets/d/1QCykHV7gq4XXtrpvgmITf2YCGuljyr9NZHzAFl0FWxQ/edit?gid=2072030414#gid=2072030414))
 
 ## Quick Links
-- [Power User Definition](analyses/README.md)
+- [Power User Definition](analyses/power_users.md)
 - [Power User Analysis](analyses/insights__power_users.sql)
 - [Data Intuition and Quality Framework](#data-quality-framework)
 
