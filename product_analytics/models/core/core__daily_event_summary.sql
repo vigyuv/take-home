@@ -1,4 +1,4 @@
-with dates AS (
+with dates as (
 
 	select
 		*
@@ -43,7 +43,7 @@ with dates AS (
 
 )
 
-, final AS (
+, final as (
 
 	select
 		dates.calendar_date as activity_date

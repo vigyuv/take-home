@@ -20,9 +20,9 @@ with recursive date_series as (
 	, concat(
 		year(calendar_date), '-', lpad(month(calendar_date), 2, '0')
 	) as year_month
-    , date_trunc('month', calendar_date) as month_start
-    , last_day(calendar_date) as month_end
-	, concat(year(calendar_date), '-Q', quarter(calendar_date)) as year_quarter
+	, date_trunc('month', calendar_date) as month_start
+	, last_day(calendar_date) as month_end
+	, concat(year(calendar_date), '-q', quarter(calendar_date)) as year_quarter
 	, weekofyear(calendar_date) as week_number
 	, year(calendar_date) as calendar_year
 	, {{ required_table_fields() }}
