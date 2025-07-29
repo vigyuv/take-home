@@ -62,7 +62,7 @@ with dates as (
 		, nvl(monthly_activity.unique_query_types, 0) as unique_query_types
 		, nvl(monthly_activity.total_documents_uploaded, 0) as total_documents_uploaded
 		, nvl(monthly_activity.average_feedback_score, 0.0) as average_feedback_score
-		, nvl(monthly_activity.feedbacks_submitted, 0.0) as feedbacks_submitted
+		, nvl(monthly_activity.feedbacks_submitted, 0) as feedbacks_submitted
 		, case
 			when nvl(monthly_activity.last_active_date, to_date('9999-12-31')) = to_date('9999-12-31')
 				then 999
@@ -109,6 +109,7 @@ with dates as (
 			when total_queries = 0 then 'zero'
 			else 'na'
 		end as engagement_level
+		, MD5(user_id || activity_month) AS _unique_key
 		, {{ required_table_fields() }}
 	from consolidated
 

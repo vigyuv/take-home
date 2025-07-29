@@ -1,0 +1,79 @@
+version: 2
+
+models:
+  - name: core__monthly_user_engagement
+    alias: fact_monthly_user_engagement
+    config:
+      contract:
+        enforced: true
+    description: | 
+      Fact table of monthly user engagement.
+    data_tests:
+      - warn_freshness_anomalies_defaults:
+        timestamp_column: _updated_at
+
+    columns:
+      - name: activity_month
+        description: Month of the activity (reporting month)
+        data_type: string
+        data_tests:
+          - not_null
+
+      - name: user_id
+        description: Unique identifier for the user
+        data_type: string
+        data_tests:
+          - not_null
+
+      - name: firm_id
+        description: Unique identifier for the firm
+        data_type: string
+        data_tests:
+          - not_null
+
+      - name: total_queries
+        description: Total number of queries performed by the user
+        data_type: number(16, 0)
+
+      - name: last_active_date
+        description: Date when the user was last active
+        data_type: date
+
+      - name: unique_query_types
+        description: Number of unique query types performed by the user
+        data_type: number(16, 0)
+
+      - name: total_documents_uploaded
+        description: Total number of documents uploaded by the user
+        data_type: number(16, 0)
+
+      - name: average_feedback_score
+        description: Average feedback score given by the user
+        data_type: number(16, 2)
+
+      - name: feedbacks_submitted
+        description: Number of feedbacks submitted by the user
+        data_type: number(16, 0)
+
+      - name: days_since_last_active
+        description: Number of days since the user was last active
+        data_type: number(16, 0)
+
+      - name: engagement_level
+        description: Level of engagement of the user
+        data_type: string
+        data_tests:
+          - not_null
+
+      - name: _unique_key
+        description: {{ doc(_unique_key) }}
+        data_type: string
+        constraints:
+          - primary_key
+        data_tests:
+          - unique
+          - not_null
+
+      - name: _updated_at
+        description: {{ doc(_updated_at) }}
+        data_type: timestamp

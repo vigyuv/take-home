@@ -36,19 +36,11 @@ with users AS (
 
 	select
 		users.cohort_month
-		, daily_activity.activity_month
+		, daily_activity.activity_month as reporting_month
 		, users.firm_id
 		, datediff('month', users.cohort_month, daily_activity.activity_month) as months_since_acquisition
-		, count(distinct 
-			case
-				when daily_activity.user_id is not null then users.user_id
-			end
-		) as retained_users
-		, count(distinct
-			case
-				when date_trunc('month', users.activation_date) = users.cohort_month then users.user_id 
-			end
-		) as users_in_cohort
+		, count(distinct daily_activity.user_id) as retained_users
+		, count(distinct users.user_id) as users_in_cohort
 		, nvl(sum(daily_activity.total_queries), 0) as total_queries
 	from users 
 		left join daily_activity 
@@ -64,11 +56,20 @@ with users AS (
 , final AS (
 
 	select
-		*
-		, retained_users / nullif(users_in_cohort, 0) as retention_rate
+		cohort_month
+		, reporting_month
+		, firm_id
+		, months_since_acquisition
+		, retained_users
+		, users_in_cohort
+		, total_queries
+		, case
+			when users_in_cohort > 0 then retained_users / users_in_cohort
+			else 0
+		end as retention_rate
+		, MD5(cohort_month || reporting_month || firm_id) AS _unique_key
 		, {{ required_table_fields() }}
 	from consolidated
-
 
 )
 

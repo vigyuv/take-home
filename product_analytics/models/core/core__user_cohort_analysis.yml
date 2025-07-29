@@ -1,0 +1,65 @@
+version: 2
+
+models:
+  - name: core__user_cohort_analysis
+    alias: fact_user_cohort_analysis
+    config:
+      contract:
+        enforced: true
+    description: | 
+      Fact table of user cohort analysis.
+    data_tests:
+      - warn_freshness_anomalies_defaults:
+        timestamp_column: _updated_at
+
+    columns:
+      - name: cohort_month
+        description: Month of the cohort
+        data_type: string
+        data_tests:
+          - not_null
+
+      - name: reporting_month
+        description: Reporting month
+        data_type: string
+        data_tests:
+          - not_null
+
+      - name: firm_id
+        description: Unique identifier for the firm
+        data_type: string
+        data_tests:
+          - not_null
+
+      - name: months_since_acquisition
+        description: Number of months since the user was acquired
+        data_type: number(16, 0)
+
+      - name: retained_users
+        description: Number of retained users
+        data_type: number(16, 0)
+
+      - name: users_in_cohort
+        description: Number of users in the cohort
+        data_type: number(16, 0)
+
+      - name: total_queries
+        description: Total number of queries performed by the users in the cohort
+        data_type: number(16, 0)
+
+      - name: retention_rate
+        description: Retention rate of the cohort
+        data_type: number(16, 2)
+
+      - name: _unique_key
+        description: {{ doc(_unique_key) }}
+        data_type: string
+        constraints:
+          - primary_key
+        data_tests:
+          - unique
+          - not_null
+
+      - name: _updated_at
+        description: {{ doc(_updated_at) }}
+        data_type: timestamp
