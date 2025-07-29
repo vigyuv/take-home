@@ -32,6 +32,7 @@ with source as (
 		, is_active__c as is_active
 		
 		--timestamps
+		, to_varchar(sys_created_at, 'yyyy-MM') as registered_month
 		, created_at__c as sys_created_at
 		, last_modified_date__c as sys_modified_at
 		, {{ required_table_fields() }}
