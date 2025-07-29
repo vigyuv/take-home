@@ -1,0 +1,17 @@
+version: 2
+
+macros:
+  - name: required_table_fields
+    description: |
+      This macro returns the required metadata fields for a table.
+
+      Usage Example:
+      ```
+      {% raw %}
+      {{ required_table_fields() }}
+      {% endraw %}
+      ```
+    arguments:
+      - name: none
+        description: No arguments are required.
+        type: none

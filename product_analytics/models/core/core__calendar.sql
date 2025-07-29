@@ -15,7 +15,7 @@ with recursive date_series as (
 , final as (
 
 	select
-	hash(calendar_date)as core_calendar_id
+	hash(calendar_date) as core_calendar_id
 	, calendar_date
 	, concat(
 		year(calendar_date), '-', lpad(month(calendar_date), 2, '0')

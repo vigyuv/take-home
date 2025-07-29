@@ -14,13 +14,13 @@ models:
     
     columns:
       - name: activity_date
-        description: "{{ doc('activity_date') }}"
+        description: {{ doc(activity_date) }}
         data_type: date
         data_tests:
           - not_null
 
       - name: session_id
-        description: "Unique identifier for the session"
+        description: Unique identifier for the session
         data_type: string
         constraints:
           - primary_key
@@ -29,38 +29,38 @@ models:
           - not_null
 
       - name: user_id
-        description: "Unique identifier for the user"
+        description: Unique identifier for the user
         data_type: string
         data_tests:
           - not_null
 
       - name: event_id
-        description: "Unique identifier for the event"
+        description: Unique identifier for the event
         data_type: string
         data_tests:
           - not_null
 
       - name: event_name
-        description: "Name of the event"
+        description: Name of the event
         data_type: string
 
       - name: event_type
-        description: "Type/category of the event"
+        description: Type/category of the event
         data_type: string
         data_tests:
           - accepted_values:
-              values: ['assistant', 'vault', 'workflow']
+              values: [assistant, vault, workflow]
 
       - name: number_of_documents
-        description: "Number of documents in the event"
+        description: Number of documents in the event
         data_type: number(16, 0)
 
       - name: feedback_score
-        description: "Feedback score given by the user for the event"
+        description: Feedback score given by the user for the event
         data_type: number(16, 0)
 
       - name: created_at
-        description: "Timestamp when the event was created"
+        description: Timestamp when the event was created
         data_type: timestamp
         constraints:
           - not_null
@@ -68,5 +68,5 @@ models:
           - not_null
 
       - name: _updated_at
-        description: "Timestamp when the record was last updated"
+        description: {{ doc(_updated_at) }}
         data_type: timestamp
