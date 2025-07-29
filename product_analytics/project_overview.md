@@ -9,7 +9,7 @@ This analytics project transforms raw telemetry and CRM data into trusted, busin
 ## Quick Links
 - [Power User Definition](analyses/power_users.md)
 - [Power User Analysis](analyses/insights__power_users.sql)
-- [Data Intuition and Quality Framework](#data-quality-framework)
+- [Data Intuition and Data Quality Framework](#data-quality-framework)
 
 ## Analytics Architecture
 
@@ -41,7 +41,7 @@ Raw Data Sources → Base Models → Core Models → Curated Models → Business
 
 ## Data Quality Framework
 
-### **Potential data quality issues:**
+### **Observed Data Quality Issues:**
 - **Missing Foriegn Key** in `users` table: Users table doesn't contain `firm_id` potentially due to missing joins or deleted metadata.
 - **Slowly changing Dimensions**: `firms` table contains a factual field called firm size that can change over a period of time.
 - **Orphaned Users**: Some users in the `users` table may not have an associated `firm_id` in the `firms` table, leading to broken joins and incomplete firm-level rollups.
