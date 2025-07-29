@@ -73,7 +73,7 @@ config:
 - `not_null` constraints on critical fields
 - `unique` constraints on primary keys
 - `accepted_values` for categorical fields
-- Custom business logic validation
+- `custom tests` Custom business logic validation
 
 ## Business Impact
 
