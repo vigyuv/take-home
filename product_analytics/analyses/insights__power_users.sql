@@ -9,7 +9,7 @@ with dates as (
 
 )
 
-engagement as (
+, engagement as (
 
 	select
 		*
@@ -21,6 +21,7 @@ engagement as (
 
 	select
 		*
+		, to_varchar(sys_created_at, 'yyyy-MM') as registered_month
 	from {{ ref('base_salesforce__firms') }}
 	where is_active = true
 
@@ -49,7 +50,8 @@ engagement as (
 		, count(distinct user_id) as unique_users
 		, count(distinct verified_power_user) as power_users
 	from user_classification
-	group by firm_id
+	group by activity_month
+		, firm_id
 
 )
 
@@ -130,7 +132,7 @@ engagement as (
 			else 'Not a Power User'
 		end as power_user_category
 		, case 
-			when (consolidated.power_users_ratio >= 0.8) /  then '80% Power Users'
+			when (consolidated.power_users_ratio >= 0.8)  then '80%+ Power Users'
 			when (consolidated.power_users_ratio between 0.5 and 0.79) then '50% - 79% Power Users'
 			when (consolidated.power_users_ratio < 0.5) then '0% - 49% Power Users'
 		  end as Power_User_Ratio_Category
