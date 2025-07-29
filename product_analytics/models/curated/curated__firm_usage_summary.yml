@@ -1,0 +1,157 @@
+version: 2
+
+models:
+  - name: curated__firm_usage_summary
+    alias: firm_usage_summary
+    config:
+      contract:
+        enforced: true
+    description: | 
+      Curated table that contains firm usage summary and their health.
+    data_tests:
+      - warn_freshness_anomalies_defaults:
+        timestamp_column: _updated_at
+
+    columns:
+      - name: reporting_month
+        description: Reporting month
+        data_type: string
+        data_tests:
+          - not_null
+
+      - name: firm_id
+        description: Unique identifier for the firm
+        data_type: string
+
+      - name: firm_name
+        description: Name of the firm
+        data_type: string
+
+      - name: practice_area
+        description: Practice area of the firm
+        data_type: string
+
+      - name: client_base
+        description: Client base of the firm
+        data_type: string
+
+      - name: client_service_region
+        description: Client service region of the firm
+        data_type: string
+
+      - name: client_service_sub_region
+        description: Client service sub-region of the firm
+        data_type: string
+
+      - name: market_segment
+        description: Market segment of the firm
+        data_type: string
+
+      - name: country
+        description: Country of the firm
+        data_type: string
+
+      - name: state
+        description: State of the firm
+        data_type: string
+
+      - name: city
+        description: City of the firm
+        data_type: string
+
+      - name: zip_code
+        description: Zip code of the firm
+        data_type: string
+
+      - name: firm_size
+        description: Size of the firm
+        data_type: number(16, 0)
+
+      - name: arr_in_thousands_usd
+        description: Annual recurring revenue in thousands of USD
+        data_type: number(16, 0)
+
+      - name: active_users
+        description: Number of active users
+        data_type: number(16, 0)
+
+      - name: total_queries
+        description: Total number of queries
+        data_type: number(16, 0)
+
+      - name: total_documents_uploaded
+        description: Total number of documents uploaded
+        data_type: number(16, 0)
+
+      - name: average_feedback_score
+        description: Average feedback score
+        data_type: number(16, 2)
+
+      - name: feedbacks_submitted
+        description: Number of feedbacks submitted
+        data_type: number(16, 0)
+
+      - name: average_queries_per_user
+        description: Average number of queries per user
+        data_type: number(16, 2)
+
+      - name: prior_month_active_users
+        description: Number of active users in the prior month
+        data_type: number(16, 0)
+
+      - name: prior_month_total_queries
+        description: Total number of queries in the prior month
+        data_type: number(16, 0)
+
+      - name: prior_month_total_documents_uploaded
+        description: Total number of documents uploaded in the prior month
+        data_type: number(16, 0)
+
+      - name: prior_month_average_feedback_score
+        description: Average feedback score in the prior month
+        data_type: number(16, 2)
+
+      - name: prior_month_average_queries_per_user
+        description: Average number of queries per user in the prior month
+        data_type: number(16, 2)
+
+      - name: active_users_trend
+        description: Trend in the number of active users
+        data_type: string
+
+      - name: total_queries_trend
+        description: Trend in the total number of queries
+        data_type: string
+
+      - name: total_documents_uploaded_trend
+        description: Trend in the total number of documents uploaded
+        data_type: string
+
+      - name: average_feedback_score_trend
+        description: Trend in the average feedback score
+        data_type: string
+
+      - name: average_queries_per_user_trend
+        description: Trend in the average number of queries per user
+        data_type: string
+
+      - name: firm_health
+        description: Health of the firm
+        data_type: string
+
+      - name: firm_growth_trend
+        description: Trend in the growth of the firm
+        data_type: string
+
+      - name: _unique_key
+        description: {{ doc(_unique_key) }}
+        data_type: string
+        constraints:
+          - primary_key
+        data_tests:
+          - unique
+          - not_null
+
+      - name: _updated_at
+        description: {{ doc(_updated_at) }}
+        data_type: timestamp
