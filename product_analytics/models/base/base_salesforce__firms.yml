@@ -1,0 +1,146 @@
+version: 2
+
+models:
+  - name: base_salesforce__firms
+    alias: firms
+    config:
+      contract:
+        enforced: true
+    description: | 
+      Table that records events performed by users in Harvey's Platform.
+    data_tests:
+      - warn_freshness_anomalies_defaults:
+        timestamp_column: sys_modified_at
+
+    columns:
+      - name: firm_id
+        description: "Unique identifier for the firm"
+        data_type: string
+        constraints:
+          - primary_key
+        data_tests:
+          - unique
+          - not_null
+
+      - name: firm_name
+        description: "Name of the firm"
+        data_type: string
+        data_tests:
+          - not_null
+    
+      - name: practice_area
+        description: "Primary practice area of the firm"
+        data_type: string
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                [
+                  'Litigation',
+                  'Corporate Law',
+                  'Intellectual Property',
+                  'Family/Immigration',
+                  'Employment/Labor'
+                ]
+
+      - name: client_base
+        description: "Type of client base the firm serves"
+        data_type: string
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                [
+                  'B2B-Centric',
+                  'B2C-Centric',
+                  'Mixed'
+                ]
+
+      - name: client_service_region
+        description: "Geographic region where the firm primarily serves clients"
+        data_type: string
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                [
+                  'North America',
+                  'Europe',
+                  'Asia-Pacific',
+                  'Latin America',
+                  'Africa'
+                ]
+
+      - name: client_service_sub_region
+        description: "Sub-region within the primary service region"
+        data_type: string
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                [
+                  'east', 'west', 'central', 'north', 'south',
+                  'northeast', 'southeast', 'northwest', 'southwest'
+                ]
+
+      - name: market_segment
+        description: "Market segment the firm primarily serves"
+        data_type: string
+        data_tests:
+          - not_null
+          - accepted_values:
+              values:
+                [
+                  'Small Firms',
+                  'Mid-sized Firms',
+                  'Large Firms',
+                  'Enterprise Firms'
+                ]
+
+      - name: country
+        description: "Country where the firm is located"
+        data_type: string
+        data_tests:
+          - not_null 
+
+      - name: state
+        description: "State or region where the firm is located"
+        data_type: string
+        data_tests:
+          - not_null
+
+      - name: city
+        description: "City where the firm is located"
+        data_type: string
+
+      - name: zip_code
+        description: "Postal code of the firm's location"
+        data_type: string
+
+      - name: firm_size
+        description: "Size of the firm based on number of employees"
+        data_type: number(16, 0)
+        data_tests:
+          - not_null
+
+      - name: annual_revenue
+        description: "Annual revenue of the firm in USD"
+        data_type: number(16, 2)
+        data_tests:
+          - not_null
+
+      - name: is_active
+        description: "Indicates if the firm is currently active"
+        data_type: boolean
+
+      - name: sys_created_at
+        description: "{{ doc('sys_created_at') }}"
+        data_type: timestamp
+
+      - name: sys_modified_at
+        description: "{{ doc('sys_modified_at') }}"
+        data_type: timestamp
+
+      - name: _updated_at
+        description: "Timestamp when the record was last updated"
+        data_type: timestamp

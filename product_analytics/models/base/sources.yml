@@ -1,0 +1,17 @@
+version: 2
+
+sources:
+  - name: salesforce
+    description: Data source for customers relationship management system
+    database: source_salesforce
+    schema: salesforce
+    tables:
+      - name: firms__c
+
+  - name: nucleus
+    description: Data source for product telemetry and user interactions
+    database: source_nucleus
+    schema: nucleus
+    tables:
+      - name: events
+      - name: users
