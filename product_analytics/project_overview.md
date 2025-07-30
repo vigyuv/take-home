@@ -1,16 +1,15 @@
 # Harvey AI - Product Analytics
 
 > **Executive Summary**
-> - Built a layered analytics model (base → core → curated) to translate telemetry + CRM into trustworthy, decision-ready metrics.
-> - Defined **power users** *based on* the `core__monthly_user_engagement` model using guardrails (recency, active days, feature breadth) plus **segment-based p90** query thresholds—implemented as an **analysis** (SQL/Markdown), not as a core column.
-> - Surfaced key data-quality risks (FK gaps, SCD firm size, event hygiene, null feedback) and tied each to executable dbt tests.
+> - Built a layered analytics model (base → core → curated) to translate telemetry and CRM datasets into trustworthy, decision-ready metrics.
+> - Defined power users based on the `core__monthly_user_engagement` model using engagement metrics and segment-based p90; thresholds—implemented as an analysis model.
+> - Surfaced key data-quality risks (e.g: Foriegn Key gaps, Slowly Changing Dimensions, event telemetry hygiene, null values) and tied each to executable dbt tests.
 
-## Tasks (per assignment)
+## Tasks (as per assignment)
 ### 1) Power user definition 
-**Definition:** A user is a **power user** in a given month if they are recently active, consistently engaged, and in the **top decile of query volume for their segment**, with minimum activity safeguards.
+**Definition:** A user is a **power user** in a given month if they are consistently engaged, and in the **top decile of query volume for their segment**, with minimum activity safeguards.
 
-**Rule (summary):**
-- **Recency:** `last_active_at` within *N* days of month-end  
+**Rule (summary):**  
 - **Consistency:** at least *X* **active days** in the month  
 - **Breadth:** at least *Y* **distinct query types** used  
 - **Depth (data-driven):** `total_queries` ≥ **p90** for their segment  
@@ -20,27 +19,25 @@
 - Definition & rationale: [`analyses/power_users.md`](analyses/power_users.md)  
 - SQL Analysis: [`analyses/insights__power_users.sql`](analyses/insights__power_users.sql)
 
-> **Note:** The assignment permits answering in Markdown/SQL; therefore, the power-user logic is presented as an **analysis** derived from the `core__monthly_user_engagement` model rather than embedded as a persistent column in the core/curated model.
-
-**Why this works:** Combines **guardrails** (recency/consistency/breadth) with a **percentile threshold** that adapts by segment, preventing large-firm bias while preserving comparability.
+**Why this works:** Combines **guardrails** (consistency/breadth/depth) with a **percentile threshold** that adapts by segment, preventing large-firm bias while preserving comparability.
 
 ---
 
-### 2) Potential Data quality issues (and mitigation)
+### 2) Potential Data Quality Issues (and mitigation)
 - **Missing foreign keys (users → firms):** Orphaned users break firm rollups.  
   *Mitigation:* `relationships` tests on `users.firm_id → firms.firm_id`; null-safe joins.
 - **Slowly Changing Dimensions (firm size):** Using latest size can distort history.  
-  *Mitigation:* Documented “as-of month” assumption; call out snapshot/SCD as next step.
+  *Mitigation:* Snapshots/SCD Type 2 logic to track changes to firm size.
 - **Event hygiene (accepted values):** Inconsistent `event_type` skews engagement.  
-  *Mitigation:* `accepted_values` tests; normalization CTE in base layer.
+  *Mitigation:* `accepted_values` tests in base models.
 - **Duplicate/near-duplicate events:** Double counts inflate depth metrics.  
-  *Mitigation:* Composite uniqueness and dedupe in base.
+  *Mitigation:* Composite uniqueness and dedupe in base models.
 - **Null/biased feedback:** Sparse feedback skews satisfaction rates.  
   *Mitigation:* Null handling + rate metrics; volume thresholds for inclusion.
 - **Freshness gaps:** Late-arriving telemetry undermines month-close metrics.  
   *Mitigation:* Source freshness checks; flag partial months.
 
-> Each issue above maps to a dbt test or normalization step; see [Data Quality Framework](#data-quality-framework) for details.
+> See [Data Quality Framework](#data-quality-framework) to see tests implemented in the project to prevent data quality issues and anomalies. 
 
 ---
 
@@ -54,7 +51,7 @@
 | **Curated** | `curated__firm_usage_summary` | firm × reporting_month | engagement metrics, engagement trend, growth trend  |
 | **Analyses** | `insights__power_users` | analysis result set | Segment p90s, user rankings, power users within a firm and across the customer base |
 
-> See [Model Interpretation Guide](#model-interpretation-guide) for how to read each model.
+> See [Model Interpretation Guide](#model-interpretation-guide) to learn more about the model layers.
 
 ---
 
@@ -86,7 +83,7 @@ Raw Data Sources → Base Models → Core Models → Curated Models → Business
 1. DRY & Modular: Each model is purpose-built and layered for reusability
 2. Dimensional Modeling: Fact and dimension separation for analytical, BI flexibility
 3. Contract-Driven Models: Enforced dbt contracts and tests validate schema and data integrity
-4. Medallion Pattern: Follows Bronze (`source`) → Silver (`base`) → Gold (`core`, `curated`) structure
+4. Medallion Pattern: Follows Bronze (`source`) → Silver (`base`) → Gold (`core`, `curated`) structure.
 
 ## Model Interpretation Guide
 
