@@ -5,7 +5,7 @@
 > - Defined **power users** *based on* the `core__monthly_user_engagement` model using guardrails (recency, active days, feature breadth) plus **segment-based p90** query thresholds—implemented as an **analysis** (SQL/Markdown), not as a core column.
 > - Surfaced key data-quality risks (FK gaps, SCD firm size, event hygiene, null feedback) and tied each to executable dbt tests.
 
-## Tasks per assignment
+## Tasks (per assignment)
 ### 1) Power user definition 
 **Definition:** A user is a **power user** in a given month if they are recently active, consistently engaged, and in the **top decile of query volume for their segment**, with minimum activity safeguards.
 
